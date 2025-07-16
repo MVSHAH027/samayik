@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samayik Quiz</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@400;600&family=Poppins:wght@400;600&display=swap');
+
+        :root {
+            --primary-color: #4a90e2;
+            --secondary-color: #f5a623;
+            --background-color: #f0f4f8;
+            --text-color: #333;
+            --light-text-color: #ffffff;
+            --correct-color: #28a745;
+            --wrong-color: #dc3545;
+            --card-bg: #ffffff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: 'Poppins', 'Hind Vadodara', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border-radius: 0 0 16px 16px;
+            box-shadow: var(--shadow);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .lang-switcher {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .lang-btn {
+            padding: 10px 20px;
+            border: 2px solid var(--primary-color);
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 5px;
+        }
+
+        .lang-btn.active {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+        }
+
+        .quiz-container {
+            margin-top: 20px;
+        }
+
+        .question-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .question-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .options-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .option {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            display: block;
+        }
+
+        .option:hover:not(.disabled) {
+            background-color: #e9ecef;
+            border-color: var(--primary-color);
+        }
+
+        .option.correct {
+            background-color: var(--correct-color);
+            color: var(--light-text-color);
+            border-color: var(--correct-color);
+            font-weight: bold;
+        }
+
+        .option.wrong {
+            background-color: var(--wrong-color);
+            color: var(--light-text-color);
+            border-color: var(--wrong-color);
+        }
+        
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .explanation {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.95em;
+            display: none; /* Hidden by default */
+        }
+        
+        .explanation.correct {
+            background-color: #e9f7eb;
+            border-left: 4px solid var(--correct-color);
+            color: #155724;
+            display: block; /* Show on correct selection */
+        }
+
+        .explanation.wrong {
+             background-color: #f8d7da;
+            border-left: 4px solid var(--wrong-color);
+            color: #721c24;
+            display: block; /* Show on wrong selection */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1 id="quiz-title">Samayik Quiz</h1>
+        </div>
+
+        <div class="lang-switcher">
+            <button id="lang-en" class="lang-btn active">English</button>
+            <button id="lang-gu" class="lang-btn">ગુજરાતી</button>
+        </div>
+
+        <div id="quiz-container" class="quiz-container">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+    </div>
+
+    <script>
+        const questions_en = [
+            {
+                question: "What is the fundamental definition of 'Samayik' according to the scriptures?",
+                options: ["Performing a ritual for 48 minutes", "Equanimity (Samabhav)", "Reading holy books", "Fasting for a day"],
+                answer: "Equanimity (Samabhav)",
+                explanation: "The text defines Samayik as 'Samabhav,' which means maintaining equanimity and not having attachment (Raag) or aversion (Dvesh) in the mind."
+            },
+            {
+                question: "What is the purpose of the 'Iriyavahi' ritual performed at the beginning of Samayik?",
+                options: ["To praise the Gods", "To ask for wealth", "Atonement for the violence caused to living beings while walking", "To declare the start of the ritual"],
+                answer: "Atonement for the violence caused to living beings while walking",
+                explanation: "'Iriyavahi' is a process of repentance for any harm caused to living beings, knowingly or unknowingly, while moving about. It's essential for achieving equanimity."
+            },
+            {
+                question: "The sutra 'Karemi Bhante' is a vow for what?",
+                options: ["Worshipping the Tirthankaras", "Renouncing sinful activities", "Starting a business", "Going on a pilgrimage"],
+                answer: "Renouncing sinful activities",
+                explanation: "The 'Karemi Bhante' sutra is a pledge to abandon all sinful activities (Paap-tyag), which is a prerequisite for attaining true equanimity."
+            },
+            {
+                question: "In the text, what analogy is used to explain the relationship between the ritual (Vyavahar) and inner emotion (Nischay)?",
+                options: ["A seed and a tree", "A glass and milk", "A body and a soul", "A lamp and light"],
+                answer: "A glass and milk",
+                explanation: "The ritual (Vyavahar) is compared to a glass, which is the container for the inner emotion (Nischay), compared to milk. The container is necessary to hold the content."
+            },
+            {
+                question: "What is considered the first and best benefit of performing Samayik?",
+                options: ["Gaining respect from others", "Attaining one's own self/soul", "Getting a good rebirth", "Saving electricity"],
+                answer: "Attaining one's own self/soul",
+                explanation: "The primary benefit is self-realization. Samayik helps us connect with our true self, which is pure and free from attachment and aversion."
+            },
+            {
+                question: "What does 'Savadyatyag', a benefit of Samayik, mean?",
+                options: ["Gaining knowledge", "Managing stress", "Freedom from the majority of sins", "Connecting with God"],
+                answer: "Freedom from the majority of sins",
+                explanation: "'Savadyatyag' is the renunciation of sinful activities, leading to freedom from the karmic baggage associated with them."
+            },
+            {
+                question: "How does Samayik act as a form of 'Stress Management' for a householder?",
+                options: ["It makes them forget their problems", "It provides a peaceful escape from worldly affairs", "It gives them physical strength", "It helps them earn more money"],
+                answer: "It provides a peaceful escape from worldly affairs",
+                explanation: "By disconnecting from worldly stress and focusing inward, Samayik serves as a 'super medicine' for the stress faced in daily life."
+            },
+            {
+                question: "How does practicing Samayik contribute to 'Resource Saving'?",
+                options: ["It generates electricity", "It magically creates water", "It involves no use of resources like water, electricity, or fuel", "It teaches how to invest money"],
+                answer: "It involves no use of resources like water, electricity, or fuel",
+                explanation: "During Samayik, one refrains from using worldly resources, thus contributing to their conservation and making the world safer."
+            },
+            {
+                question: "What kind of knowledge can be attained during Samayik?",
+                options: ["Knowledge of worldly affairs", "Samyagjnan (Right Knowledge) of Jinshasan", "Scientific knowledge", "Knowledge of future events"],
+                answer: "Samyagjnan (Right Knowledge) of Jinshasan",
+                explanation: "By cutting off from the world, one can focus on and attain the real, right knowledge as prescribed in Jain philosophy (Jinshasan)."
+            },
+            {
+                question: "What is the ultimate goal or final benefit of the practice of Samayik?",
+                options: ["A long life in heaven (Devalok)", "Respect in society", "Moksha (liberation)", "Destruction of all enemies"],
+                answer: "Moksha (liberation)",
+                explanation: "The practice of Samayik, step-by-step, leads the soul to the ultimate goal of Moksha, freeing it from all sorrows and attaining eternal bliss."
+            },
+            {
+                question: "What does the term 'Palyopam' signify?",
+                options: ["A period of 48 minutes", "One hundred years", "A specific type of prayer", "Uncountable years"],
+                answer: "Uncountable years",
+                explanation: "The text mentions that one Samayik can grant a lifespan in Devalok for more than 92 crore 'Palyopam,' where Palyopam means an immeasurably long period of time."
+            },
+            {
+                question: "According to the text, what is the pure form of our soul?",
+                options: ["Attachment and aversion", "Samayik (Equanimity)", "Physical body", "Intellect"],
+                answer: "Samayik (Equanimity)",
+                explanation: "The pure form (shuddha swaroop) of the soul is described as Samayik or Samabhav (equanimity), just as the nature of water is pure, even when mixed with dirt."
+            },
+            {
+                question: "Why are self-devised principles (like not using a phone for 30 mins) considered less effective than the formal Samayik ritual?",
+                options: ["They are too easy", "They don't provide the perfect, pitfall-free path shown by the Omniscient", "They are not mentioned in any book", "They don't last long enough"],
+                answer: "They don't provide the perfect, pitfall-free path shown by the Omniscient",
+                explanation: "The path given by the Omniscient Lord (Sarvajna) is perfect and complete. Self-made rules might be a step in the right direction but lack the comprehensive protection and structure of the formal ritual."
+            },
+            {
+                question: "What happens to inauspicious (ashubh) karmas through the practice of Samayik?",
+                options: ["They are multiplied", "They are transferred to someone else", "They get cut or destroyed", "They are postponed"],
+                answer: "They get cut or destroyed",
+                explanation: "Samayik has the power to shed or destroy inauspicious karmas that would otherwise lead to suffering like disease, poverty, or birth in lower life forms."
+            },
+            {
+                question: "What social benefit is gained by a person who regularly performs Samayik?",
+                options: ["They become famous", "They earn a lot of money", "They gain respect from everyone", "They win elections"],
+                answer: "They gain respect from everyone",
+                explanation: "When family members see someone performing Samayik instead of wasting time, they develop respect for that person, which also inspires others and improves the home environment."
+            },
+            {
+                question: "What is the state of a person without Samayik?",
+                options: ["They are always happy", "They are constantly losing their 'self' to external things", "They are very productive", "They are accumulating good karma"],
+                answer: "They are constantly losing their 'self' to external things",
+                explanation: "Without Samayik, one is constantly engaged in worldly activities that generate attachment and aversion, thereby 'losing' the connection to their true self."
+            },
+            {
+                question: "The text compares the soul with Raag-Dvesh to what?",
+                options: ["A flower and its fragrance", "The sun and clouds", "Pure water mixed with dirt", "Gold mixed with other metals"],
+                answer: "Pure water mixed with dirt",
+                explanation: "The soul is inherently pure like water. Attachment and aversion (Raag-Dvesh) are like dirt that contaminates it, but they are not the soul's true nature."
+            },
+            {
+                question: "What is the seventh benefit of Samayik mentioned in the text?",
+                options: ["Resource Saving", "Peaceful Experience", "Connection with God", "Achievement of Respect"],
+                answer: "Connection with God",
+                explanation: "The seventh benefit is connecting with the divine (Parmatma) through prayers, hymns, and chants during Samayik."
+            },
+            {
+                question: "According to Lord Mahavir in the Bhagavati Sutra, what is our soul?",
+                options: ["Our body", "Our mind", "Our Samayik", "Our wealth"],
+                answer: "Our Samayik",
+                explanation: "Lord Mahavir stated, 'Our soul is Samayik. Our soul is the meaning of Samayik,' emphasizing that the state of equanimity is the soul's true nature."
+            },
+            {
+                question: "Which of these is NOT listed as a benefit of Samayik in the text?",
+                options: ["Stress Management", "Attainment of supernatural powers", "Attainment of a good rebirth (Sadgati)", "Peaceful Experience"],
+                answer: "Attainment of supernatural powers",
+                explanation: "While Samayik has many spiritual and worldly benefits, the attainment of supernatural powers (like flying or becoming invisible) is not mentioned as a direct benefit in this chapter."
+            },
+            {
+                question: "What is the main reason that it's difficult to maintain equanimity without the formal Samayik ritual?",
+                options: ["It's boring to sit still", "One can be easily disturbed by phone calls or visitors", "One needs special clothes", "It requires a teacher"],
+                answer: "One can be easily disturbed by phone calls or visitors",
+                explanation: "Without the structure of the ritual, distractions from the outside world make it nearly impossible to generate and sustain a state of true equanimity."
+            },
+            {
+                question: "The text says it is easier to control the ______ than the ______.",
+                options: ["mind, body", "emotions, actions", "body, mind", "speech, thoughts"],
+                answer: "body, mind",
+                explanation: "It is stated that controlling the body (tan) is easier than controlling the mind (man). By first controlling the body through the ritual, it becomes possible to control the mind."
+            },
+            {
+                question: "What happens to the atmosphere of a house where someone practices Samayik?",
+                options: ["It becomes very quiet", "Everyone gets annoyed", "The whole atmosphere changes for the better", "Nothing changes"],
+                answer: "The whole atmosphere changes for the better",
+                explanation: "The positive spiritual vibrations and the example set by the practitioner inspire others and change the entire environment of the home for the better."
+            },
+            {
+                question: "One Samayik can lead to a lifespan of more than how many crore Palyopam in Devalok?",
+                options: ["Ten", "Fifty-two", "Ninety-two", "One hundred"],
+                answer: "Ninety-two",
+                explanation: "The text specifies that a single Samayik can grant a celestial lifespan of more than ninety-two crore Palyopam."
+            },
+            {
+                question: "According to the text, if you have your 'self', what else do you need?",
+                options: ["You still need wealth and fame", "You need a good family", "You don't need anything else", "You need the blessings of everyone"],
+                answer: "You don't need anything else",
+                explanation: "The message is that if you have attained your true self, you possess the ultimate pleasure and do not require any other worldly thing."
+            }
+        ];
+
+        const questions_gu = [
+            {
+                question: "શાસ્ત્રો અનુસાર 'સામાયિક'ની મૂળભૂત વ્યાખ્યા શું છે?",
+                options: ["૪૮ મિનિટ માટે અનુષ્ઠાન કરવું", "સમભાવ", "પવિત્ર પુસ્તકો વાંચવા", "એક દિવસ માટે ઉપવાસ કરવો"],
+                answer: "સમભાવ",
+                explanation: "પાઠમાં સામાયિકને 'સમભાવ' તરીકે વ્યાખ્યાયિત કરવામાં આવ્યું છે, જેનો અર્થ છે સમતા જાળવવી અને મનમાં રાગ કે દ્વેષ ન રાખવો."
+            },
+            {
+                question: "સામાયિકની શરૂઆતમાં કરવામાં આવતી 'ઇરિયાવહી' ક્રિયાનો હેતુ શું છે?",
+                options: ["દેવોની સ્તુતિ કરવી", "ધન-સંપત્તિ માંગવી", "ચાલતી વખતે જીવોને થયેલી હિંસાનું પ્રાયશ્ચિત્ત કરવું", "અનુષ્ઠાનની શરૂઆતની ઘોષણા કરવી"],
+                answer: "ચાલતી વખતે જીવોને થયેલી હિંસાનું પ્રાયશ્ચિત્ત કરવું",
+                explanation: "'ઇરિયાવહી' એ જાણતાં-અજાણતાં ચાલતી વખતે જીવોને થયેલી કોઇપણ હાનિ માટે પશ્ચાતાપ કરવાની પ્રક્રિયા છે. સમતા પ્રાપ્ત કરવા માટે તે જરૂરી છે."
+            },
+            {
+                question: "'કરેમિ ભંતે' સૂત્ર શાના માટેની પ્રતિજ્ઞા છે?",
+                options: ["તીર્થંકરોની પૂજા કરવી", "પાપકારી પ્રવૃત્તિઓનો ત્યાગ કરવો", "વ્યવસાય શરૂ કરવો", "યાત્રાએ જવું"],
+                answer: "પાપકારી પ્રવૃત્તિઓનો ત્યાગ કરવો",
+                explanation: "'કરેમિ ભંતે' સૂત્ર એ સર્વ પાપકારી પ્રવૃત્તિઓનો ત્યાગ (પાપ-ત્યાગ) કરવાની પ્રતિજ્ઞા છે, જે સાચી સમતા પ્રાપ્ત કરવા માટેની પૂર્વશરત છે."
+            },
+            {
+                question: "પાઠમાં, વિધિ (વ્યવહાર) અને આંતરિક ભાવના (નિશ્ચય) વચ્ચેના સંબંધને સમજાવવા માટે કઈ ઉપમાનો ઉપયોગ કરવામાં આવ્યો છે?",
+                options: ["બીજ અને વૃક્ષ", "ગ્લાસ અને દૂધ", "શરીર અને આત્મા", "દીવો અને પ્રકાશ"],
+                answer: "ગ્લાસ અને દૂધ",
+                explanation: "વિધિ (વ્યવહાર)ને ગ્લાસ સાથે સરખાવવામાં આવે છે, જે આંતરિક ભાવના (નિશ્ચય) રૂપી દૂધનું પાત્ર છે. દૂધને રાખવા માટે પાત્ર જરૂરી છે."
+            },
+            {
+                question: "સામાયિક કરવાનો પ્રથમ અને શ્રેષ્ઠ લાભ કયો ગણવામાં આવે છે?",
+                options: ["બીજાઓ પાસેથી આદર મેળવવો", "પોતાના આત્માની પ્રાપ્તિ", "સારી ગતિમાં પુનર્જન્મ મેળવવો", "વીજળી બચાવવી"],
+                answer: "પોતાના આત્માની પ્રાપ્તિ",
+                explanation: "મુખ્ય લાભ આત્મ-સાક્ષાત્કાર છે. સામાયિક આપણને આપણા સાચા સ્વરૂપ સાથે જોડાવામાં મદદ કરે છે, જે શુદ્ધ અને રાગ-દ્વેષથી મુક્ત છે."
+            },
+            {
+                question: "સામાયિકના લાભ 'સાવદ્યત્યાગ'નો અર્થ શું છે?",
+                options: ["જ્ઞાન મેળવવું", "તણાવનું સંચાલન કરવું", "મોટાભાગના પાપોમાંથી મુક્તિ", "ભગવાન સાથે જોડાણ"],
+                answer: "મોટાભાગના પાપોમાંથી મુક્તિ",
+                explanation: "'સાવદ્યત્યાગ' એ પાપકારી પ્રવૃત્તિઓનો ત્યાગ છે, જે તેમની સાથે સંકળાયેલા કર્મના બોજમાંથી મુક્તિ તરફ દોરી જાય છે."
+            },
+            {
+                question: "સામાયિક ગૃહસ્થ માટે 'સ્ટ્રેસ મેનેજમેન્ટ' (તણાવ વ્યવસ્થાપન)ના સ્વરૂપ તરીકે કેવી રીતે કાર્ય કરે છે?",
+                options: ["તે તેમને તેમની સમસ્યાઓ ભુલાવી દે છે", "તે સાંસારિક બાબતોમાંથી શાંતિપૂર્ણ મુક્તિ પ્રદાન કરે છે", "તે તેમને શારીરિક શક્તિ આપે છે", "તે તેમને વધુ પૈસા કમાવવામાં મદદ કરે છે"],
+                answer: "તે સાંસારિક બાબતોમાંથી શાંતિપૂર્ણ મુક્તિ પ્રદાન કરે છે",
+                explanation: "સાંસારિક તણાવથી દૂર થઈને અને અંદરની તરફ ધ્યાન કેન્દ્રિત કરીને, સામાયિક રોજિંદા જીવનમાં સામનો કરવા પડતા તણાવ માટે 'સુપર મેડિસિન' તરીકે કામ કરે છે."
+            },
+            {
+                question: "સામાયિકની પ્રેક્ટિસ 'સંસાધન બચત'માં કેવી રીતે ફાળો આપે છે?",
+                options: ["તે વીજળી ઉત્પન્ન કરે છે", "તે જાદુઈ રીતે પાણી બનાવે છે", "તેમાં પાણી, વીજળી કે બળતણ જેવા સંસાધનોનો ઉપયોગ થતો નથી", "તે પૈસાનું રોકાણ કેવી રીતે કરવું તે શીખવે છે"],
+                answer: "તેમાં પાણી, વીજળી કે બળતણ જેવા સંસાધનોનો ઉપયોગ થતો નથી",
+                explanation: "સામાયિક દરમિયાન, વ્યક્તિ સાંસારિક સંસાધનોનો ઉપયોગ કરવાથી દૂર રહે છે, આમ તેમના સંરક્ષણમાં ફાળો આપે છે અને વિશ્વને વધુ સુરક્ષિત બનાવે છે."
+            },
+            {
+                question: "સામાયિક દરમિયાન કેવા પ્રકારનું જ્ઞાન પ્રાપ્ત કરી શકાય છે?",
+                options: ["સાંસારિક બાબતોનું જ્ઞાન", "જિનશાસનનું સમ્યગ્જ્ઞાન", "વૈજ્ઞાનિક જ્ઞાન", "ભવિષ્યની ઘટનાઓનું જ્ઞાન"],
+                answer: "જિનશાસનનું સમ્યગ્જ્ઞાન",
+                explanation: "દુનિયાથી અલગ થઈને, વ્યક્તિ જૈન દર્શન (જિનશાસન)માં નિર્ધારિત વાસ્તવિક, સાચા જ્ઞાન પર ધ્યાન કેન્દ્રિત કરી શકે છે અને તેને પ્રાપ્ત કરી શકે છે."
+            },
+            {
+                question: "સામાયિકની સાધનાનો અંતિમ ધ્યેય અથવા અંતિમ લાભ શું છે?",
+                options: ["દેવલોકમાં લાંબુ આયુષ્ય", "સમાજમાં આદર", "મોક્ષ", "બધા દુશ્મનોનો નાશ"],
+                answer: "મોક્ષ",
+                explanation: "સામાયિકની સાધના, પગલે-પગલે, આત્માને મોક્ષના અંતિમ ધ્યેય તરફ દોરી જાય છે, તેને સર્વ દુઃખોથી મુક્ત કરીને શાશ્વત સુખ પ્રાપ્ત કરાવે છે."
+            },
+            {
+                question: "'પલ્યોપમ' શબ્દનો અર્થ શું છે?",
+                options: ["૪૮ મિનિટનો સમયગાળો", "એક સો વર્ષ", "એક વિશિષ્ટ પ્રકારની પ્રાર્થના", "અસંખ્ય વર્ષો"],
+                answer: "અસંખ્ય વર્ષો",
+                explanation: "પાઠમાં ઉલ્લેખ છે કે એક સામાયિકથી બાણું કરોડ 'પલ્યોપમ'થી વધુ સમયનું દેવલોકનું આયુષ્ય મળી શકે છે, જ્યાં પલ્યોપમનો અર્થ અગણિત લાંબો સમયગાળો છે."
+            },
+            {
+                question: "પાઠ અનુસાર, આપણા આત્માનું શુદ્ધ સ્વરૂપ શું છે?",
+                options: ["રાગ અને દ્વેષ", "સામાયિક (સમભાવ)", "ભૌતિક શરીર", "બુદ્ધિ"],
+                answer: "સામાયિક (સમભાવ)",
+                explanation: "આત્માનું શુદ્ધ સ્વરૂપ સામાયિક અથવા સમભાવ તરીકે વર્ણવવામાં આવ્યું છે, જેમ પાણીનું સ્વરૂપ શુદ્ધ હોય છે, ભલે તેમાં માટી ભળેલી હોય."
+            },
+            {
+                question: "સ્વ-નિર્મિત સિદ્ધાંતો (જેમ કે ૩૦ મિનિટ માટે ફોનનો ઉપયોગ ન કરવો) ઔપચારિક સામાયિક વિધિ કરતાં ઓછા અસરકારક શા માટે ગણવામાં આવે છે?",
+                options: ["તેઓ ખૂબ સરળ છે", "તેઓ સર્વજ્ઞ દ્વારા બતાવેલ સંપૂર્ણ, ભૂલ-મુક્ત માર્ગ પ્રદાન કરતા નથી", "તેમનો કોઈ પુસ્તકમાં ઉલ્લેખ નથી", "તેઓ લાંબા સમય સુધી ટકતા નથી"],
+                answer: "તેઓ સર્વજ્ઞ દ્વારા બતાવેલ સંપૂર્ણ, ભૂલ-મુક્ત માર્ગ પ્રદાન કરતા નથી",
+                explanation: "સર્વજ્ઞ પરમાત્મા દ્વારા આપવામાં આવેલો માર્ગ સંપૂર્ણ અને દોષરહિત છે. સ્વ-નિર્મિત નિયમો સાચી દિશામાં એક પગલું હોઈ શકે છે પરંતુ તેમાં ઔપચારિક વિધિ જેવી વ્યાપક સુરક્ષા અને માળખાનો અભાવ હોય છે."
+            },
+            {
+                question: "સામાયિકની સાધના દ્વારા અશુભ કર્મોનું શું થાય છે?",
+                options: ["તેઓ ગુણાકારમાં વધે છે", "તેઓ બીજા કોઈને સ્થાનાંતરિત થાય છે", "તેઓ કપાઈ જાય છે અથવા નાશ પામે છે", "તેઓ મુલતવી રહે છે"],
+                answer: "તેઓ કપાઈ જાય છે અથવા નાશ પામે છે",
+                explanation: "સામાયિકમાં અશુભ કર્મોને કાપવાની અથવા નાશ કરવાની શક્તિ છે જે અન્યથા રોગ, ગરીબી અથવા નીચલી યોનિમાં જન્મ જેવા દુઃખ તરફ દોરી જાય છે."
+            },
+            {
+                question: "નિયમિત સામાયિક કરનાર વ્યક્તિને કયો સામાજિક લાભ મળે છે?",
+                options: ["તેઓ પ્રખ્યાત બને છે", "તેઓ ખૂબ પૈસા કમાય છે", "તેઓ દરેક પાસેથી આદર મેળવે છે", "તેઓ ચૂંટણી જીતે છે"],
+                answer: "તેઓ દરેક પાસેથી આદર મેળવે છે",
+                explanation: "જ્યારે પરિવારના સભ્યો કોઈને સમય બગાડવાને બદલે સામાયિક કરતા જુએ છે, ત્યારે તેઓ તે વ્યક્તિ માટે આદર વિકસાવે છે, જે અન્યને પણ પ્રેરણા આપે છે અને ઘરનું વાતાવરણ સુધારે છે."
+            },
+            {
+                question: "સામાયિક વિનાની વ્યક્તિની સ્થિતિ શું હોય છે?",
+                options: ["તેઓ હંમેશા ખુશ રહે છે", "તેઓ બાહ્ય વસ્તુઓ માટે સતત પોતાનું 'સ્વ' ગુમાવી રહ્યા છે", "તેઓ ખૂબ ઉત્પાદક હોય છે", "તેઓ સારા કર્મો એકઠા કરી રહ્યા છે"],
+                answer: "તેઓ બાહ્ય વસ્તુઓ માટે સતત પોતાનું 'સ્વ' ગુમાવી રહ્યા છે",
+                explanation: "સામાયિક વિના, વ્યક્તિ સતત સાંસારિક પ્રવૃત્તિઓમાં વ્યસ્ત રહે છે જે રાગ અને દ્વેષ ઉત્પન્ન કરે છે, જેનાથી તે પોતાના સાચા સ્વ સાથેનું જોડાણ 'ગુમાવે' છે."
+            },
+            {
+                question: "પાઠમાં આત્માની રાગ-દ્વેષ સાથેની સરખામણી કોની સાથે કરવામાં આવી છે?",
+                options: ["ફૂલ અને તેની સુગંધ", "સૂર્ય અને વાદળો", "માટી સાથે મિશ્રિત શુદ્ધ પાણી", "અન્ય ધાતુઓ સાથે મિશ્રિત સોનું"],
+                answer: "માટી સાથે મિશ્રિત શુદ્ધ પાણી",
+                explanation: "આત્મા પાણીની જેમ સ્વાભાવિક રીતે શુદ્ધ છે. રાગ-દ્વેષ માટી જેવા છે જે તેને દૂષિત કરે છે, પરંતુ તે આત્માનું સાચું સ્વરૂપ નથી."
+            },
+            {
+                question: "પાઠમાં ઉલ્લેખિત સામાયિકનો સાતમો લાભ કયો છે?",
+                options: ["સંસાધન બચત", "શાંતિપૂર્ણ અનુભવ", "પરમાત્મા સાથે જોડાણ", "આદરની પ્રાપ્તિ"],
+                answer: "પરમાત્મા સાથે જોડાણ",
+                explanation: "સાતમો લાભ સામાયિક દરમિયાન પ્રાર્થના, સ્તવન અને જાપ દ્વારા પરમાત્મા સાથે જોડાવાનો છે."
+            },
+            {
+                question: "ભગવતી સૂત્રમાં ભગવાન મહાવીરના મતે, આપણો આત્મા શું છે?",
+                options: ["આપણું શરીર", "આપણું મન", "આપણી સામાયિક", "આપણી સંપત્તિ"],
+                answer: "આપણી સામાયિક",
+                explanation: "ભગવાન મહાવીરે કહ્યું, 'આપણો આત્મા સામાયિક છે. આપણો આત્મા સામાયિકનો અર્થ છે,' એ વાત પર ભાર મૂકતા કે સમભાવની સ્થિતિ એ જ આત્માનું સાચું સ્વરૂપ છે."
+            },
+            {
+                question: "આમાંથી કયો એક પાઠમાં સામાયિકના લાભ તરીકે સૂચિબદ્ધ નથી?",
+                options: ["તણાવ વ્યવસ્થાપન", "અલૌકિક શક્તિઓની પ્રાપ્તિ", "સદ્ગતિની પ્રાપ્તિ", "શાંતિપૂર્ણ અનુભવ"],
+                answer: "અલૌકિક શક્તિઓની પ્રાપ્તિ",
+                explanation: "જ્યારે સામાયિકના ઘણા આધ્યાત્મિક અને સાંસારિક લાભો છે, ત્યારે આ અધ્યાયમાં અલૌકિક શક્તિઓની પ્રાપ્તિ (જેમ કે ઉડવું કે અદ્રશ્ય થવું)નો સીધો લાભ તરીકે ઉલ્લેખ નથી."
+            },
+            {
+                question: "ઔપચારિક સામાયિક વિધિ વિના સમતા જાળવવી શા માટે મુશ્કેલ છે તેનું મુખ્ય કારણ શું છે?",
+                options: ["સ્થિર બેસવું કંટાળાજનક છે", "ફોન કોલ્સ અથવા મુલાકાતીઓ દ્વારા સરળતાથી ખલેલ પહોંચી શકે છે", "તેના માટે ખાસ કપડાંની જરૂર છે", "તેના માટે શિક્ષકની જરૂર છે"],
+                answer: "ફોન કોલ્સ અથવા મુલાકાતીઓ દ્વારા સરળતાથી ખલેલ પહોંચી શકે છે",
+                explanation: "વિધિના માળખા વિના, બહારની દુનિયાના વિક્ષેપો સાચી સમતાની સ્થિતિ ઉત્પન્ન કરવી અને ટકાવી રાખવી લગભગ અશક્ય બનાવે છે."
+            },
+            {
+                question: "પાઠ કહે છે કે ______ કરતાં ______ ને નિયંત્રિત કરવું સહેલું છે.",
+                options: ["મન, તન", "ભાવનાઓ, ક્રિયાઓ", "તન, મન", "વાણી, વિચારો"],
+                answer: "તન, મન",
+                explanation: "એવું કહેવામાં આવ્યું છે કે મનને નિયંત્રિત કરવા કરતાં તન (શરીર)ને નિયંત્રિત કરવું સહેલું છે. વિધિ દ્વારા પ્રથમ શરીરને નિયંત્રિત કરવાથી, મનને નિયંત્રિત કરવું શક્ય બને છે."
+            },
+            {
+                question: "જે ઘરમાં કોઈ વ્યક્તિ સામાયિક કરે છે ત્યાંના વાતાવરણનું શું થાય છે?",
+                options: ["તે ખૂબ શાંત થઈ જાય છે", "બધા હેરાન થાય છે", "આખું વાતાવરણ વધુ સારું બને છે", "કંઈ બદલાતું નથી"],
+                answer: "આખું વાતાવરણ વધુ સારું બને છે",
+                explanation: "સકારાત્મક આધ્યાત્મિક સ્પંદનો અને સાધક દ્વારા સ્થાપિત ઉદાહરણ અન્યને પ્રેરણા આપે છે અને ઘરના સમગ્ર વાતાવરણને વધુ સારું બનાવે છે."
+            },
+            {
+                question: "એક સામાયિક દેવલોકમાં કેટલા કરોડ પલ્યોપમથી વધુનું આયુષ્ય આપી શકે છે?",
+                options: ["દસ", "બાવન", "બાણું", "એક સો"],
+                answer: "બાણું",
+                explanation: "પાઠમાં સ્પષ્ટપણે ઉલ્લેખ છે કે એક જ સામાયિક બાણું કરોડ પલ્યોપમથી વધુનું દેવલોકનું આયુષ્ય પ્રદાન કરી શકે છે."
+            },
+            {
+                question: "પાઠ અનુસાર, જો તમારી પાસે તમારું 'સ્વ' છે, તો તમારે બીજા શેની જરૂર છે?",
+                options: ["તમારે હજી પણ ધન અને કીર્તિની જરૂર છે", "તમારે સારા પરિવારની જરૂર છે", "તમારે બીજા કશાની જરૂર નથી", "તમારે સૌના આશીર્વાદની જરૂર છે"],
+                answer: "તમારે બીજા કશાની જરૂર નથી",
+                explanation: "સંદેશ એ છે કે જો તમે તમારું સાચું સ્વ પ્રાપ્ત કરી લીધું છે, તો તમારી પાસે પરમ સુખ છે અને તમારે અન્ય કોઈ સાંસારિક વસ્તુની જરૂર નથી."
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const quizTitle = document.getElementById('quiz-title');
+        const btnEn = document.getElementById('lang-en');
+        const btnGu = document.getElementById('lang-gu');
+        let currentLang = 'en';
+
+        // Function to shuffle an array
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function loadQuiz() {
+            quizContainer.innerHTML = '';
+            const questions = currentLang === 'en' ? questions_en : questions_gu;
+            quizTitle.textContent = currentLang === 'en' ? 'Samayik Quiz' : 'સામાયિક ક્વિઝ';
+            
+            shuffle(questions);
+
+            questions.forEach((q, index) => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.textContent = `${index + 1}. ${q.question}`;
+                card.appendChild(questionText);
+
+                const optionsList = document.createElement('ul');
+                optionsList.className = 'options-list';
+                
+                const shuffledOptions = [...q.options];
+                shuffle(shuffledOptions);
+
+                shuffledOptions.forEach(optionText => {
+                    const optionItem = document.createElement('li');
+                    optionItem.className = 'option';
+                    optionItem.textContent = optionText;
+                    optionItem.onclick = (event) => checkAnswer(event, optionText, q.answer, card);
+                    optionsList.appendChild(optionItem);
+                });
+
+                card.appendChild(optionsList);
+
+                const explanationBox = document.createElement('div');
+                explanationBox.className = 'explanation';
+                explanationBox.innerHTML = `<b>${currentLang === 'en' ? 'Answer' : 'જવાબ'}:</b> ${q.answer}<br><br><em>${q.explanation}</em>`;
+                card.appendChild(explanationBox);
+
+                quizContainer.appendChild(card);
+            });
+        }
+
+        function checkAnswer(event, selectedOption, correctAnswer, card) {
+            const selectedLi = event.target;
+            const options = card.querySelectorAll('.option');
+            const explanationBox = card.querySelector('.explanation');
+
+            // Disable all options for this question
+            options.forEach(opt => {
+                opt.classList.add('disabled');
+                opt.onclick = null; // Remove click event
+            });
+
+            if (selectedOption === correctAnswer) {
+                selectedLi.classList.add('correct');
+                explanationBox.classList.add('correct');
+            } else {
+                selectedLi.classList.add('wrong');
+                explanationBox.classList.add('wrong');
+                // Highlight the correct answer as well
+                options.forEach(opt => {
+                    if (opt.textContent === correctAnswer) {
+                        opt.classList.add('correct');
+                    }
+                });
+            }
+        }
+
+        btnEn.addEventListener('click', () => {
+            if (currentLang !== 'en') {
+                currentLang = 'en';
+                btnEn.classList.add('active');
+                btnGu.classList.remove('active');
+                loadQuiz();
+            }
+        });
+
+        btnGu.addEventListener('click', () => {
+            if (currentLang !== 'gu') {
+                currentLang = 'gu';
+                btnGu.classList.add('active');
+                btnEn.classList.remove('active');
+                loadQuiz();
+            }
+        });
+
+        // Initial load
+        window.onload = loadQuiz;
+    </script>
+
+</body>
+</html>

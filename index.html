@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>સામાયિક: આત્માની શાંતિનો માર્ગ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Use Inter for English and Noto Sans Gujarati for Gujarati */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: #fdfaf6;
+        }
+
+        html[lang="gu"] body, html[lang="gu"] .font-lang {
+            font-family: 'Noto Sans Gujarati', sans-serif;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.15);
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border: 1px solid white;
+            color: white;
+            background-color: transparent;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .lang-btn.active {
+            background-color: white;
+            color: #764ba2;
+            font-weight: bold;
+        }
+        .content-section h2 {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+        .content-section p, .content-section li {
+            font-size: 1.125rem; /* 18px */
+            line-height: 1.8;
+            color: #555;
+        }
+        .link-button {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            color: white;
+            background: linear-gradient(to right, #f97316, #ea580c);
+            transition: transform 0.2s;
+        }
+        .link-button:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <!-- Header and Hero Section -->
+    <header class="hero-section text-white p-6 shadow-lg">
+        <div class="container mx-auto max-w-4xl">
+            <!-- Language Switcher -->
+            <div class="flex justify-end space-x-2 mb-6">
+                <button id="btn-gu" class="lang-btn" onclick="changeLanguage('gu')">ગુજરાતી</button>
+                <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">English</button>
+            </div>
+
+            <!-- Title -->
+            <div class="text-center py-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 font-lang" data-lang-key="title">સામાયિક: આત્માની શાંતિનો માર્ગ</h1>
+                <p class="text-lg md:text-xl opacity-90 font-lang" data-lang-key="subtitle">સમતા અને આત્મ-જાગૃતિ દ્વારા જીવનને સમૃદ્ધ બનાવો</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto max-w-4xl p-6">
+
+        <!-- What is Samayik? -->
+        <section id="what-is-samayik" class="content-section my-12">
+            <div class="card p-8">
+                <h2 class="font-lang" data-lang-key="what_is_title">સામાયિક શું છે?</h2>
+                <p class="font-lang" data-lang-key="what_is_p1">
+                    સામાયિક એ જૈન ધર્મની એક અત્યંત મહત્વપૂર્ણ આધ્યાત્મિક પ્રથા છે. શાસ્ત્રો અનુસાર, "સમભાવ એ સામાયિક છે," જેનો અર્થ છે મનમાં સંપૂર્ણ સમતા જાળવવી, કોઈપણ પ્રકારના રાગ (આસક્તિ) અને દ્વેષ (અણગમો) થી મુક્ત રહેવું.
+                </p>
+                <p class="mt-4 font-lang" data-lang-key="what_is_p2">
+                    આ 48 મિનિટની પ્રક્રિયા છે જેમાં વ્યક્તિ દુન્યવી પ્રવૃત્તિઓથી દૂર રહીને આત્મ-ચિંતન, ધ્યાન અને આધ્યાત્મિક અભ્યાસમાં લીન બને છે. તે માત્ર એક ક્રિયા નથી, પરંતુ મનની શુદ્ધિ અને આત્માની ઓળખ માટેનો એક શક્તિશાળી માર્ગ છે.
+                </p>
+            </div>
+        </section>
+
+        <!-- How to do Samayik? -->
+        <section id="how-to" class="content-section my-12">
+            <div class="card p-8">
+                <h2 class="font-lang" data-lang-key="how_to_title">સામાયિક કેવી રીતે કરવી?</h2>
+                <p class="font-lang" data-lang-key="how_to_p1">
+                    સામાયિક કરવાની એક નિર્ધારિત વિધિ છે, જે શારીરિક અને માનસિક શિસ્ત પર ભાર મૂકે છે. આ પ્રક્રિયા તમને આત્માની નજીક લઈ જાય છે. સંપૂર્ણ માર્ગદર્શન માટે, નીચે આપેલ વિડિઓ જુઓ.
+                </p>
+                <div class="mt-6 text-center">
+                    <a href="https://youtu.be/moKvsuXdWnE" target="_blank" class="link-button font-lang" data-lang-key="how_to_link">સંપૂર્ણ માર્ગદર્શિકા જુઓ</a>
+                    <p class="text-sm mt-2 text-gray-500 font-lang" data-lang-key="how_to_link_desc">આત્માની ઓળખ: સામાયિક કેવી રીતે કરવી? | સંપૂર્ણ માર્ગદર્શિકા</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits of Samayik -->
+        <section id="benefits" class="content-section my-12">
+            <div class="card p-8">
+                <h2 class="font-lang" data-lang-key="benefits_title">સામાયિકના લાભો અને મહત્વ</h2>
+                <p class="font-lang" data-lang-key="benefits_p1">
+                    સામાયિક કરવાથી અસંખ્ય માનસિક, ભાવનાત્મક અને આધ્યાત્મિક લાભો મળે છે. તે તણાવ ઘટાડે છે, મનને શાંત કરે છે અને જીવનમાં સકારાત્મક દૃષ્ટિકોણ લાવે છે.
+                </p>
+                <ul class="list-disc list-inside mt-4 space-y-2 font-lang">
+                    <li data-lang-key="benefit1">પાપ કર્મોનો નાશ થાય છે.</li>
+                    <li data-lang-key="benefit2">મનની શાંતિ અને સ્થિરતા વધે છે.</li>
+                    <li data-lang-key="benefit3">સમ્યક્ જ્ઞાનની પ્રાપ્તિ થાય છે.</li>
+                    <li data-lang-key="benefit4">પરમાત્મા સાથે જોડાણ મજબૂત બને છે.</li>
+                    <li data-lang-key="benefit5">સમાજ અને પરિવારમાં આદર મળે છે.</li>
+                    <li data-lang-key="benefit6">દેવલોકનું આયુષ્ય બંધાય છે.</li>
+                </ul>
+                <div class="mt-6 text-center">
+                    <a href="https://youtu.be/YVOLTPOlrWw" target="_blank" class="link-button font-lang" data-lang-key="benefits_link">વિગતવાર પોડકાસ્ટ સાંભળો</a>
+                    <p class="text-sm mt-2 text-gray-500 font-lang" data-lang-key="benefits_link_desc">પોડકાસ્ટ: સામાયિકના લાભો અને મહત્વ</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Additional Resources -->
+        <section id="resources" class="content-section my-12">
+             <div class="grid md:grid-cols-2 gap-8">
+                <!-- Infographics Card -->
+                <div class="card p-8 text-center">
+                    <h3 class="text-2xl font-bold mb-3 font-lang" data-lang-key="infographics_title">વિઝ્યુઅલ ગાઇડ</h3>
+                    <p class="mb-4 font-lang" data-lang-key="infographics_desc">સામાયિકના મુખ્ય પાસાઓને સમજવા માટે આકર્ષક ઇન્ફોગ્રાફિક્સ જુઓ.</p>
+                    <a href="./infographics.html" target="_blank" class="link-button font-lang" data-lang-key="infographics_link">ઇન્ફોગ્રાફિક્સ જુઓ</a>
+                </div>
+
+                <!-- Quiz Card -->
+                <div class="card p-8 text-center">
+                    <h3 class="text-2xl font-bold mb-3 font-lang" data-lang-key="quiz_title">જ્ઞાન ચકાસો</h3>
+                    <p class="mb-4 font-lang" data-lang-key="quiz_desc">તમારા જ્ઞાનને ચકાસવા અને તેને વ્યવહારમાં મૂકવા માટે આ ક્વિઝ રમો.</p>
+                    <a href="./quiz.html" target="_blank" class="link-button font-lang" data-lang-key="quiz_link">ક્વિઝ શરૂ કરો</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white text-center p-6">
+        <p class="font-lang" data-lang-key="contact_name">મનીષ વી. શાહ</p>
+        <p data-lang-key="contact_info">વોટ્સએપ: 94299 26447 | (વડોદરા)</p>
+    </footer>
+
+    <script>
+        // --- TRANSLATION DATA ---
+        const translations = {
+            gu: {
+                title: "સામાયિક: આત્માની શાંતિનો માર્ગ",
+                subtitle: "સમતા અને આત્મ-જાગૃતિ દ્વારા જીવનને સમૃદ્ધ બનાવો",
+                what_is_title: "સામાયિક શું છે?",
+                what_is_p1: "સામાયિક એ જૈન ધર્મની એક અત્યંત મહત્વપૂર્ણ આધ્યાત્મિક પ્રથા છે. શાસ્ત્રો અનુસાર, \"સમભાવ એ સામાયિક છે,\" જેનો અર્થ છે મનમાં સંપૂર્ણ સમતા જાળવવી, કોઈપણ પ્રકારના રાગ (આસક્તિ) અને દ્વેષ (અણગમો) થી મુક્ત રહેવું.",
+                what_is_p2: "આ 48 મિનિટની પ્રક્રિયા છે જેમાં વ્યક્તિ દુન્યવી પ્રવૃત્તિઓથી દૂર રહીને આત્મ-ચિંતન, ધ્યાન અને આધ્યાત્મિક અભ્યાસમાં લીન બને છે. તે માત્ર એક ક્રિયા નથી, પરંતુ મનની શુદ્ધિ અને આત્માની ઓળખ માટેનો એક શક્તિશાળી માર્ગ છે.",
+                how_to_title: "સામાયિક કેવી રીતે કરવી?",
+                how_to_p1: "સામાયિક કરવાની એક નિર્ધારિત વિધિ છે, જે શારીરિક અને માનસિક શિસ્ત પર ભાર મૂકે છે. આ પ્રક્રિયા તમને આત્માની નજીક લઈ જાય છે. સંપૂર્ણ માર્ગદર્શન માટે, નીચે આપેલ વિડિઓ જુઓ.",
+                how_to_link: "સંપૂર્ણ માર્ગદર્શિકા જુઓ",
+                how_to_link_desc: "આત્માની ઓળખ: સામાયિક કેવી રીતે કરવી? | સંપૂર્ણ માર્ગદર્શિકા",
+                benefits_title: "સામાયિકના લાભો અને મહત્વ",
+                benefits_p1: "સામાયિક કરવાથી અસંખ્ય માનસિક, ભાવનાત્મક અને આધ્યાત્મિક લાભો મળે છે. તે તણાવ ઘટાડે છે, મનને શાંત કરે છે અને જીવનમાં સકારાત્મક દૃષ્ટિકોણ લાવે છે.",
+                benefit1: "પાપ કર્મોનો નાશ થાય છે.",
+                benefit2: "મનની શાંતિ અને સ્થિરતા વધે છે.",
+                benefit3: "સમ્યક્ જ્ઞાનની પ્રાપ્તિ થાય છે.",
+                benefit4: "પરમાત્મા સાથે જોડાણ મજબૂત બને છે.",
+                benefit5: "સમાજ અને પરિવારમાં આદર મળે છે.",
+                benefit6: "દેવલોકનું આયુષ્ય બંધાય છે.",
+                benefits_link: "વિગતવાર પોડકાસ્ટ સાંભળો",
+                benefits_link_desc: "પોડકાસ્ટ: સામાયિકના લાભો અને મહત્વ",
+                infographics_title: "વિઝ્યુઅલ ગાઇડ",
+                infographics_desc: "સામાયિકના મુખ્ય પાસાઓને સમજવા માટે આકર્ષક ઇન્ફોગ્રાફિક્સ જુઓ.",
+                infographics_link: "ઇન્ફોગ્રાફિક્સ જુઓ",
+                quiz_title: "જ્ઞાન ચકાસો",
+                quiz_desc: "તમારા જ્ઞાનને ચકાસવા અને તેને વ્યવહારમાં મૂકવા માટે આ ક્વિઝ રમો.",
+                quiz_link: "ક્વિઝ શરૂ કરો",
+                contact_name: "મનીષ વી. શાહ",
+                contact_info: "વોટ્સએપ: 94299 26447 | (વડોદરા)",
+            },
+            en: {
+                title: "Samayik: The Path to Inner Peace",
+                subtitle: "Enrich your life through equanimity and self-awareness",
+                what_is_title: "What is Samayik?",
+                what_is_p1: "Samayik is a very important spiritual practice in Jainism. According to the scriptures, \"Equanimity is Samayik,\" which means maintaining complete balance in the mind, free from any form of attachment (Raag) and aversion (Dvesh).",
+                what_is_p2: "It is a 48-minute process in which a person stays away from worldly activities and immerses in self-reflection, meditation, and spiritual study. It is not just a ritual, but a powerful way to purify the mind and realize the soul.",
+                how_to_title: "How to Perform Samayik?",
+                how_to_p1: "There is a prescribed procedure for performing Samayik, which emphasizes physical and mental discipline. This process brings you closer to your soul. For a complete guide, watch the video below.",
+                how_to_link: "Watch the Complete Guide",
+                how_to_link_desc: "Identity of the Soul: How to do Samayik? | Complete Guide",
+                benefits_title: "Benefits and Importance of Samayik",
+                benefits_p1: "Performing Samayik offers numerous mental, emotional, and spiritual benefits. It reduces stress, calms the mind, and brings a positive perspective to life.",
+                benefit1: "Destruction of sinful karmas.",
+                benefit2: "Increases peace and stability of mind.",
+                benefit3: "Attainment of right knowledge (Samyak Gyan).",
+                benefit4: "Strengthens the connection with the divine.",
+                benefit5: "Gains respect in society and family.",
+                benefit6: "Secures a lifespan in the heavenly abodes.",
+                benefits_link: "Listen to the Detailed Podcast",
+                benefits_link_desc: "Podcast: Benefits and Importance of Samayik",
+                infographics_title: "Visual Guide",
+                infographics_desc: "View engaging infographics to understand the key aspects of Samayik.",
+                infographics_link: "View Infographics",
+                quiz_title: "Test Your Knowledge",
+                quiz_desc: "Take this quiz to test your knowledge and put it into practice.",
+                quiz_link: "Start Quiz",
+                contact_name: "Manish V. Shah",
+                contact_info: "WhatsApp: 94299 26447 | (Vadodara)",
+            }
+        };
+
+        // --- LANGUAGE SWITCHING LOGIC ---
+        let currentLang = 'gu'; // Default language
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            // Update all elements with data-lang-key attribute
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+
+            // Update button styles
+            document.getElementById('btn-gu').classList.toggle('active', lang === 'gu');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+        }
+
+        // --- INITIAL LOAD ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set initial language based on the default
+            changeLanguage(currentLang);
+        });
+    </script>
+
+</body>
+</html>

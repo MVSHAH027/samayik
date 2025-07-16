@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>સામાયિક: એક માર્ગદર્શિકા</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Noto+Sans+Gujarati:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Gujarati', 'Inter', sans-serif;
+            background-color: #F8F9FA;
+            scroll-behavior: smooth;
+        }
+        .card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            padding: 24px;
+            margin-bottom: 24px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 250px;
+        }
+        .flowchart-step {
+            border: 2px solid #87CEEB;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            background-color: #E0F7FA;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #005A9C;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .benefit-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #005A9C;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #005A9C;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        .section-intro {
+            font-size: 1.125rem;
+            color: #555555;
+            margin-bottom: 2rem;
+            text-align: center;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .lang-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid white;
+            color: white;
+            background-color: transparent;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .lang-btn.active {
+            background-color: white;
+            color: #005A9C;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-gradient-to-r from-[#005A9C] to-[#4DB6AC] text-white py-8 text-center rounded-b-xl shadow-lg sticky top-0 z-10">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold" data-lang-key="header_title">સામાયિક: એક ઊંડાણપૂર્વક માર્ગદર્શિકા</h1>
+            <p class="mt-2 text-lg" data-lang-key="header_subtitle">આત્મશુદ્ધિ અને શાંતિનો માર્ગ</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <button id="btn-gu" class="lang-btn active" onclick="changeLanguage('gu')">ગુજરાતી</button>
+                <button id="btn-en" class="lang-btn" onclick="changeLanguage('en')">English</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8 md:py-12">
+
+        <section id="what-is-samayik" class="mb-12">
+            <h2 class="section-title" data-lang-key="what_is_samayik_title">સામાયિક શું છે?</h2>
+            <p class="section-intro" data-lang-key="what_is_samayik_intro">
+                સામાયિક જૈન ધર્મની એક મહત્વપૂર્ણ સાધના છે. તેનો મૂળ અર્થ છે 'સમભાવ' - એટલે કે મનમાં રાગ (આસક્તિ) અને દ્વેષ (અણગમો) ન રાખવા, અને દરેક પરિસ્થિતિમાં સમતા જાળવવી. આ આંતરિક શુદ્ધિ અને માનસિક શાંતિ પ્રાપ્ત કરવાનો એક માર્ગ છે.
+            </p>
+            <div class="card text-center bg-gradient-to-r from-yellow-300 to-amber-400">
+                <h3 class="text-3xl font-bold text-gray-900" data-lang-key="equanimity_quote">"સમભાવ એ સામાયિક છે"</h3>
+                <p class="mt-2 text-gray-700" data-lang-key="equanimity_explanation">આ સામાયિકનો સાર છે, જે આંતરિક સંતુલન અને સ્થિરતા પર ભાર મૂકે છે.</p>
+            </div>
+        </section>
+
+        <section id="process-importance" class="mb-12">
+            <h2 class="section-title" data-lang-key="process_title">સામાયિકની પ્રક્રિયા અને મહત્વ</h2>
+            <p class="section-intro" data-lang-key="process_intro">
+                સામાયિક માત્ર માનસિક સ્થિતિ નથી, પરંતુ તે ચોક્કસ વિધિ અને સમજણ સાથે કરવામાં આવે છે. બાહ્ય ક્રિયાઓ (વ્યવહાર) આંતરિક ભાવો (નિશ્ચય)ને સ્થિર કરવામાં અને સુરક્ષિત રાખવામાં મદદ કરે છે, જેમ વાસણ દૂધને સાચવે છે.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3 text-[#005A9C] text-center" data-lang-key="vyavahar_nishchay_title">વ્યવહાર અને નિશ્ચય</h3>
+                    <div class="flex flex-col items-center p-4 border-2 border-dashed border-[#4DB6AC] rounded-lg">
+                        <div class="bg-[#87CEEB] text-white p-4 rounded-lg shadow-md mb-4 w-full text-center">
+                            <p class="font-semibold text-lg" data-lang-key="vyavahar_title">વ્યવહાર (બાહ્ય ક્રિયા)</p>
+                            <p class="text-sm" data-lang-key="vyavahar_desc">જેમ કે ધોતિયું પહેરવું, કટાસણું લેવું</p>
+                        </div>
+                        <div class="text-4xl text-[#005A9C] mb-2">▼</div>
+                        <div class="bg-[#FFD700] text-gray-800 p-4 rounded-lg shadow-md w-full text-center">
+                            <p class="font-semibold text-lg" data-lang-key="nishchay_title">નિશ્ચય (આંતરિક ભાવ)</p>
+                            <p class="text-sm" data-lang-key="nishchay_desc">સમભાવ, રાગ-દ્વેષનો અભાવ</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-600 text-center" data-lang-key="container_analogy">બાહ્ય ક્રિયાઓ આંતરિક ભાવો માટે કન્ટેનર (આધાર) સમાન છે, જે તેમને જાળવી રાખવામાં મદદ કરે છે.</p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-2xl font-semibold mb-3 text-[#005A9C] text-center" data-lang-key="main_steps_title">સામાયિક વિધિના મુખ્ય પગલાં</h3>
+                    <div class="flowchart-step bg-sky-100 border-sky-400">
+                        <h4 class="font-semibold text-lg text-sky-700" data-lang-key="step1_title">૧. ઈરિયાવહી</h4>
+                        <p class="text-sm text-gray-600" data-lang-key="step1_desc">આવતાં-જતાં જીવોને થયેલી હિંસા માટે પ્રાયશ્ચિત્ત કરવું. આના વિના સમભાવ શક્ય નથી.</p>
+                    </div>
+                    <div class="flowchart-arrow">↓</div>
+                    <div class="flowchart-step bg-amber-100 border-amber-400">
+                        <h4 class="font-semibold text-lg text-amber-700" data-lang-key="step2_title">૨. "કરેમિ ભંતે" સૂત્ર</h4>
+                        <p class="text-sm text-gray-600" data-lang-key="step2_desc">પાપત્યાગની પ્રતિજ્ઞા લેવી. પાપ છોડવાની ભાવના વિના સમભાવ અસંભવ છે.</p>
+                    </div>
+                     <p class="mt-4 text-gray-600 text-center" data-lang-key="steps_purpose">આ ક્રિયાઓ મનને શુદ્ધ કરી સમભાવ માટે તૈયાર કરે છે.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="benefits" class="mb-12">
+            <h2 class="section-title" data-lang-key="benefits_title">સામાયિકના અદ્ભુત લાભો</h2>
+            <p class="section-intro" data-lang-key="benefits_intro">
+                સામાયિક કરવાથી અનેક પ્રકારના શારીરિક, માનસિક અને આધ્યાત્મિક લાભ થાય છે. તે જીવનને ઉન્નત બનાવવાની એક શક્તિશાળી પ્રક્રિયા છે.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Benefit Cards will be dynamically populated -->
+                <div class="card text-center">
+                    <div class="benefit-icon">🧘</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit1_title">આત્માની પ્રાપ્તિ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit1_desc">"આપણો આત્મા સામાયિક છે." સ્વ-ઓળખ અને આત્મિક શુદ્ધિ.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit2_title">પાપોમાંથી મુક્તિ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit2_desc">સાવદ્ય-ત્યાગ દ્વારા સંસારના મોટાભાગના પાપોમાંથી છુટકારો.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">😌</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit3_title">તણાવમુક્તિ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit3_desc">રોજબરોજના તણાવ માટે "સુપર મેડિસીન" સમાન.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">☮️</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit4_title">શાંતિનો અનુભવ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit4_desc">મનને અદ્ભુત અને અવર્ણનીય શાંતિનો અનુભવ.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">💡</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit5_title">સમ્યજ્ઞાનની પ્રાપ્તિ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit5_desc">દુનિયાથી અલગ થઈ જિનશાસનના સાચા જ્ઞાનને સમજવાની તક.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">🙏</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit6_title">પરમાત્મા સાથે જોડાણ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit6_desc">સ્તવન, સ્તુતિ અને મંત્રજાપ દ્વારા આત્માનું પરમાત્મા સાથે જોડાણ.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">🌟</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit7_title">સન્માનની પ્રાપ્તિ</h3>
+                    <p class="text-gray-600" data-lang-key="benefit7_desc">ઘરમાં અને સમાજમાં સન્માન અને બીજા માટે પ્રેરણા.</p>
+                </div>
+                <div class="card text-center">
+                    <div class="benefit-icon">✂️</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit8_title">અશુભ કર્મોનું છેદન</h3>
+                    <p class="text-gray-600" data-lang-key="benefit8_desc">રોગ, અકસ્માત, ગરીબી જેવા દુઃખદાયી કર્મો કપાઈ જાય છે.</p>
+                </div>
+                 <div class="card text-center sm:col-span-2 lg:col-span-1">
+                    <div class="benefit-icon">🌍</div>
+                    <h3 class="text-xl font-semibold mb-1 text-[#005A9C]" data-lang-key="benefit9_title">કુદરતી સંપત્તિનો બચાવ</h3>
+                    <div class="chart-container mx-auto">
+                        <canvas id="resourceSavingChart"></canvas>
+                    </div>
+                    <p class="text-gray-600 mt-2" data-lang-key="benefit9_desc">પાણી, વીજળી, ઇંધણ જેવા સંસાધનોનો બિનજરૂરી ઉપયોગ ટાળી પર્યાવરણનું રક્ષણ.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="heaven-moksha" class="mb-12">
+            <h2 class="section-title" data-lang-key="heaven_moksha_title">સદ્ગતિ અને મોક્ષનો માર્ગ</h2>
+            <p class="section-intro" data-lang-key="heaven_moksha_intro">
+                સામાયિક માત્ર વર્તમાન જીવનને જ સુધારતી નથી, પરંતુ ભવિષ્યના ભવો અને અંતિમ મુક્તિનો માર્ગ પણ પ્રશસ્ત કરે છે.
+            </p>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="card text-center bg-gradient-to-br from-teal-300 to-cyan-400">
+                     <div class="benefit-icon text-white">🌌</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-white" data-lang-key="heaven_title">સદ્ગતિ (ઉત્તમ ભવ)</h3>
+                    <p class="text-xl md:text-2xl font-bold text-white" data-lang-key="heaven_line1">એક સામાયિકથી</p>
+                    <p class="text-2xl md:text-3xl font-bold text-yellow-300" data-lang-key="heaven_line2">બાણું કરોડ પલ્યોપમથી</p>
+                    <p class="text-white text-lg" data-lang-key="heaven_line3">પણ વધારે સમયનું દેવલોકનું આયુષ્ય.</p>
+                    <p class="mt-1 text-xs text-gray-100" data-lang-key="palyopam_note">(પલ્યોપમ = અસંખ્ય વર્ષો)</p>
+                </div>
+                <div class="card text-center bg-gradient-to-br from-orange-300 to-red-400">
+                    <div class="benefit-icon text-white">🛤️</div>
+                    <h3 class="text-2xl font-semibold mb-2 text-white" data-lang-key="moksha_title">મોક્ષનો માર્ગ</h3>
+                    <p class="text-lg text-white leading-relaxed" data-lang-key="moksha_desc">આ જ સાધના સ્ટેપ-બાય-સ્ટેપ આગળ વધારીને આત્માને સર્વ દુઃખોથી મુક્ત કરી શાશ્વત સુખના સ્વામી બનાવે છે – મોક્ષ સુધી પહોંચાડે છે.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="conclusion" class="text-center py-10">
+            <h2 class="text-3xl font-bold text-[#005A9C] mb-4" data-lang-key="conclusion_title">સામાયિક: એક મહાન સાધના</h2>
+            <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-6" data-lang-key="conclusion_desc">
+                ખરેખર, સામાયિકના આટલા બધા લાભો જાણીને સમજાય છે કે તે માત્ર બેસી રહેવાની ક્રિયા નથી, પરંતુ જીવન પરિવર્તન કરવાની એક શક્તિશાળી આધ્યાત્મિક પ્રક્રિયા છે.
+            </p>
+            <div class="card bg-gradient-to-r from-[#FFD700] to-[#FF8C00] inline-block">
+                <p class="text-xl font-semibold text-gray-900" data-lang-key="final_quote">"આજથી હું રોજ એક સામાયિક તો કરું જ."</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-6 bg-gray-800 text-white rounded-t-xl">
+        <p data-lang-key="footer_text">&copy; ૨૦૨૪ સામાયિક માર્ગદર્શિકા. સર્વહિતાર્થે.</p>
+        <p class="text-sm mt-1" data-lang-key="developer_credit">મનીષ વી. શાહ: વોટ્સએપ: 94299 26447 (વડોદરા)</p>
+    </footer>
+
+    <script>
+        // --- TRANSLATION DATA ---
+        const translations = {
+            en: {
+                header_title: "Sāmāyika: An In-depth Guide",
+                header_subtitle: "The Path to Self-Purification and Peace",
+                what_is_samayik_title: "What is Sāmāyika?",
+                what_is_samayik_intro: "Sāmāyika is a fundamental practice in Jainism. Its core meaning is 'Equanimity' - to not harbor attachment (raga) or aversion (dvesha) in the mind, and to maintain calmness in all situations. It is a path to achieve inner purity and mental peace.",
+                equanimity_quote: '"Equanimity is Sāmāyika"',
+                equanimity_explanation: "This is the essence of Sāmāyika, emphasizing inner balance and stability.",
+                process_title: "Process and Importance of Sāmāyika",
+                process_intro: "Sāmāyika is not just a mental state; it is performed with specific rituals and understanding. The external actions (Vyavahār) help to stabilize and protect the internal feelings (Nishchay), just as a vessel holds milk.",
+                vyavahar_nishchay_title: "Vyavahār & Nishchay",
+                vyavahar_title: "Vyavahār (External Action)",
+                vyavahar_desc: "e.g., Wearing specific clothes, using a mat",
+                nishchay_title: "Nishchay (Internal Feeling)",
+                nishchay_desc: "Equanimity, absence of attachment-aversion",
+                container_analogy: "External actions act as a container for internal feelings, helping to preserve them.",
+                main_steps_title: "Key Steps of the Sāmāyika Ritual",
+                step1_title: "1. Iriyāvahī",
+                step1_desc: "Atonement for any harm caused to living beings while walking. Equanimity is not possible without this.",
+                step2_title: '2. "Karemi Bhante" Sutra',
+                step2_desc: "Taking a vow to renounce sinful activities. Equanimity is impossible without the intent to abandon sin.",
+                steps_purpose: "These actions purify the mind and prepare it for equanimity.",
+                benefits_title: "The Amazing Benefits of Sāmāyika",
+                benefits_intro: "Performing Sāmāyika offers numerous physical, mental, and spiritual benefits. It is a powerful process for elevating one's life.",
+                benefit1_title: "Attainment of the Self",
+                benefit1_desc: '"Our soul is Sāmāyika." Self-realization and spiritual purification.',
+                benefit2_title: "Freedom from Sins",
+                benefit2_desc: "Liberation from most worldly sins through renunciation of harmful activities.",
+                benefit3_title: "Stress Management",
+                benefit3_desc: 'It acts as a "super medicine" for daily stress.',
+                benefit4_title: "Experience of Peace",
+                benefit4_desc: "Experience a wonderful and indescribable peace of mind.",
+                benefit5_title: "Attainment of Right Knowledge",
+                benefit5_desc: "An opportunity to disconnect from the world and understand the true knowledge of Jinashāsana.",
+                benefit6_title: "Connection with God",
+                benefit6_desc: "Connecting the soul with the divine through hymns, praises, and chanting.",
+                benefit7_title: "Gaining Respect",
+                benefit7_desc: "Earns respect in the family and society, and inspires others.",
+                benefit8_title: "Destruction of Karmas",
+                benefit8_desc: "Destroys karmas that cause suffering like disease, accidents, and poverty.",
+                benefit9_title: "Conserving Natural Resources",
+                benefit9_desc: "Protects the environment by avoiding unnecessary use of resources like water, electricity, and fuel.",
+                heaven_moksha_title: "Path to Heaven & Moksha",
+                heaven_moksha_intro: "Sāmāyika not only improves the present life but also paves the way for future births and ultimate liberation.",
+                heaven_title: "Higher State (Heavenly Birth)",
+                heaven_line1: "From one Sāmāyika,",
+                heaven_line2: "Over 92 Crore Palyopam",
+                heaven_line3: "of lifespan in a heavenly realm can be attained.",
+                palyopam_note: "(Palyopam = Innumerable years)",
+                moksha_title: "The Path to Moksha",
+                moksha_desc: "This very practice, step-by-step, leads the soul to liberation from all sorrows, making it the master of eternal bliss - it leads to Moksha.",
+                conclusion_title: "Sāmāyika: A Great Practice",
+                conclusion_desc: "Indeed, knowing the many benefits of Sāmāyika, one understands it is not merely a passive act of sitting, but a powerful spiritual process for life transformation.",
+                final_quote: '"From today, I will surely do at least one Sāmāyika daily."',
+                footer_text: "© 2024 Sāmāyika Guide. For the benefit of all.",
+                developer_credit: "Manish V. Shah: WhatsApp: 94299 26447 (Vadodara)",
+                chart_title: "Conservation of Natural Resources (Approx. %)",
+                chart_label: "Savings during Sāmāyika",
+                chart_tooltip_suffix: "% Savings",
+                resource_water: "Water Usage",
+                resource_electricity: "Electricity Usage",
+                resource_fuel: "Fuel Usage"
+            },
+            gu: {
+                header_title: "સામાયિક: એક ઊંડાણપૂર્વક માર્ગદર્શિકા",
+                header_subtitle: "આત્મશુદ્ધિ અને શાંતિનો માર્ગ",
+                what_is_samayik_title: "સામાયિક શું છે?",
+                what_is_samayik_intro: "સામાયિક જૈન ધર્મની એક મહત્વપૂર્ણ સાધના છે. તેનો મૂળ અર્થ છે 'સમભાવ' - એટલે કે મનમાં રાગ (આસક્તિ) અને દ્વેષ (અણગમો) ન રાખવા, અને દરેક પરિસ્થિતિમાં સમતા જાળવવી. આ આંતરિક શુદ્ધિ અને માનસિક શાંતિ પ્રાપ્ત કરવાનો એક માર્ગ છે.",
+                equanimity_quote: '"સમભાવ એ સામાયિક છે"',
+                equanimity_explanation: "આ સામાયિકનો સાર છે, જે આંતરિક સંતુલન અને સ્થિરતા પર ભાર મૂકે છે.",
+                process_title: "સામાયિકની પ્રક્રિયા અને મહત્વ",
+                process_intro: "સામાયિક માત્ર માનસિક સ્થિતિ નથી, પરંતુ તે ચોક્કસ વિધિ અને સમજણ સાથે કરવામાં આવે છે. બાહ્ય ક્રિયાઓ (વ્યવહાર) આંતરિક ભાવો (નિશ્ચય)ને સ્થિર કરવામાં અને સુરક્ષિત રાખવામાં મદદ કરે છે, જેમ વાસણ દૂધને સાચવે છે.",
+                vyavahar_nishchay_title: "વ્યવહાર અને નિશ્ચય",
+                vyavahar_title: "વ્યવહાર (બાહ્ય ક્રિયા)",
+                vyavahar_desc: "જેમ કે ધોતિયું પહેરવું, કટાસણું લેવું",
+                nishchay_title: "નિશ્ચય (આંતરિક ભાવ)",
+                nishchay_desc: "સમભાવ, રાગ-દ્વેષનો અભાવ",
+                container_analogy: "બાહ્ય ક્રિયાઓ આંતરિક ભાવો માટે કન્ટેનર (આધાર) સમાન છે, જે તેમને જાળવી રાખવામાં મદદ કરે છે.",
+                main_steps_title: "સામાયિક વિધિના મુખ્ય પગલાં",
+                step1_title: "૧. ઈરિયાવહી",
+                step1_desc: "આવતાં-જતાં જીવોને થયેલી હિંસા માટે પ્રાયશ્ચિત્ત કરવું. આના વિના સમભાવ શક્ય નથી.",
+                step2_title: '૨. "કરેમિ ભંતે" સૂત્ર',
+                step2_desc: "પાપત્યાગની પ્રતિજ્ઞા લેવી. પાપ છોડવાની ભાવના વિના સમભાવ અસંભવ છે.",
+                steps_purpose: "આ ક્રિયાઓ મનને શુદ્ધ કરી સમભાવ માટે તૈયાર કરે છે.",
+                benefits_title: "સામાયિકના અદ્ભુત લાભો",
+                benefits_intro: "સામાયિક કરવાથી અનેક પ્રકારના શારીરિક, માનસિક અને આધ્યાત્મિક લાભ થાય છે. તે જીવનને ઉન્નત બનાવવાની એક શક્તિશાળી પ્રક્રિયા છે.",
+                benefit1_title: "આત્માની પ્રાપ્તિ",
+                benefit1_desc: '"આપણો આત્મા સામાયિક છે." સ્વ-ઓળખ અને આત્મિક શુદ્ધિ.',
+                benefit2_title: "પાપોમાંથી મુક્તિ",
+                benefit2_desc: "સાવદ્ય-ત્યાગ દ્વારા સંસારના મોટાભાગના પાપોમાંથી છુટકારો.",
+                benefit3_title: "તણાવમુક્તિ",
+                benefit3_desc: 'રોજબરોજના તણાવ માટે "સુપર મેડિસીન" સમાન.',
+                benefit4_title: "શાંતિનો અનુભવ",
+                benefit4_desc: "મનને અદ્ભુત અને અવર્ણનીય શાંતિનો અનુભવ.",
+                benefit5_title: "સમ્યજ્ઞાનની પ્રાપ્તિ",
+                benefit5_desc: "દુનિયાથી અલગ થઈ જિનશાસનના સાચા જ્ઞાનને સમજવાની તક.",
+                benefit6_title: "પરમાત્મા સાથે જોડાણ",
+                benefit6_desc: "સ્તવન, સ્તુતિ અને મંત્રજાપ દ્વારા આત્માનું પરમાત્મા સાથે જોડાણ.",
+                benefit7_title: "સન્માનની પ્રાપ્તિ",
+                benefit7_desc: "ઘરમાં અને સમાજમાં સન્માન અને બીજા માટે પ્રેરણા.",
+                benefit8_title: "અશુભ કર્મોનું છેદન",
+                benefit8_desc: "રોગ, અકસ્માત, ગરીબી જેવા દુઃખદાયી કર્મો કપાઈ જાય છે.",
+                benefit9_title: "કુદરતી સંપત્તિનો બચાવ",
+                benefit9_desc: "પાણી, વીજળી, ઇંધણ જેવા સંસાધનોનો બિનજરૂરી ઉપયોગ ટાળી પર્યાવરણનું રક્ષણ.",
+                heaven_moksha_title: "સદ્ગતિ અને મોક્ષનો માર્ગ",
+                heaven_moksha_intro: "સામાયિક માત્ર વર્તમાન જીવનને જ સુધારતી નથી, પરંતુ ભવિષ્યના ભવો અને અંતિમ મુક્તિનો માર્ગ પણ પ્રશસ્ત કરે છે.",
+                heaven_title: "સદ્ગતિ (ઉત્તમ ભવ)",
+                heaven_line1: "એક સામાયિકથી",
+                heaven_line2: "બાણું કરોડ પલ્યોપમથી",
+                heaven_line3: "પણ વધારે સમયનું દેવલોકનું આયુષ્ય.",
+                palyopam_note: "(પલ્યોપમ = અસંખ્ય વર્ષો)",
+                moksha_title: "મોક્ષનો માર્ગ",
+                moksha_desc: "આ જ સાધના સ્ટેપ-બાય-સ્ટેપ આગળ વધારીને આત્માને સર્વ દુઃખોથી મુક્ત કરી શાશ્વત સુખના સ્વામી બનાવે છે – મોક્ષ સુધી પહોંચાડે છે.",
+                conclusion_title: "સામાયિક: એક મહાન સાધના",
+                conclusion_desc: "ખરેખર, સામાયિકના આટલા બધા લાભો જાણીને સમજાય છે કે તે માત્ર બેસી રહેવાની ક્રિયા નથી, પરંતુ જીવન પરિવર્તન કરવાની એક શક્તિશાળી આધ્યાત્મિક પ્રક્રિયા છે.",
+                final_quote: '"આજથી હું રોજ એક સામાયિક તો કરું જ."',
+                footer_text: "© ૨૦૨૪ સામાયિક માર્ગદર્શિકા. સર્વહિતાર્થે.",
+                developer_credit: "મનીષ વી. શાહ: વોટ્સએપ: 94299 26447 (વડોદરા)",
+                chart_title: "કુદરતી સંસાધનોની બચત (અંદાજિત %)",
+                chart_label: "સામાયિક દરમિયાન બચત",
+                chart_tooltip_suffix: "% બચત",
+                resource_water: "પાણીનો ઉપયોગ",
+                resource_electricity: "વીજળીનો ઉપયોગ",
+                resource_fuel: "ઇંધણનો ઉપયોગ"
+            }
+        };
+
+        let currentLang = 'gu';
+        let resourceChart = null;
+
+        // --- CHART LOGIC ---
+        function createOrUpdateChart(lang) {
+            const ctx = document.getElementById('resourceSavingChart').getContext('2d');
+            const data = {
+                labels: [
+                    translations[lang].resource_water,
+                    translations[lang].resource_electricity,
+                    translations[lang].resource_fuel
+                ],
+                datasets: [{
+                    label: translations[lang].chart_label,
+                    data: [80, 75, 90],
+                    backgroundColor: ['#87CEEB', '#FFD700', '#4DB6AC'],
+                    borderColor: ['#005A9C', '#FFA500', '#008080'],
+                    borderWidth: 1
+                }]
+            };
+
+            const options = {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: value => value + "%"
+                        }
+                    },
+                    y: {
+                        ticks: {
+                            font: {
+                                family: lang === 'gu' ? "'Noto Sans Gujarati', 'Inter', sans-serif" : "'Inter', sans-serif"
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    title: {
+                        display: true,
+                        text: translations[lang].chart_title,
+                        padding: { top: 10, bottom: 10 },
+                        font: {
+                            size: 14,
+                            family: lang === 'gu' ? "'Noto Sans Gujarati', 'Inter', sans-serif" : "'Inter', sans-serif"
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: context => `${context.dataset.label}: ${context.parsed.x}${translations[lang].chart_tooltip_suffix}`
+                        }
+                    }
+                }
+            };
+            
+            if (resourceChart) {
+                resourceChart.destroy();
+            }
+
+            resourceChart = new Chart(ctx, { type: 'bar', data, options });
+        }
+
+
+        // --- LANGUAGE SWITCHING LOGIC ---
+        function changeLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
+
+            // Update all elements with data-lang-key attribute
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.getAttribute('data-lang-key');
+                if (translations[lang][key]) {
+                    element.innerHTML = translations[lang][key];
+                }
+            });
+            
+            // Update body font
+            document.body.style.fontFamily = lang === 'gu' ? "'Noto Sans Gujarati', 'Inter', sans-serif" : "'Inter', sans-serif";
+
+            // Update button styles
+            document.getElementById('btn-gu').classList.toggle('active', lang === 'gu');
+            document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+            
+            // Re-create chart with new language labels
+            createOrUpdateChart(lang);
+        }
+
+        // --- INITIAL LOAD ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Set initial language based on the default
+            changeLanguage(currentLang);
+        });
+
+    </script>
+
+</body>
+</html>
